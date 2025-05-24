@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import "./components/common/antd-overridden.css";
+import "./component/common/antd-overridden.css"
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
