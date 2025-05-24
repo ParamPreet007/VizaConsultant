@@ -7,6 +7,7 @@ import { MailOutlined, LockOutlined, UserOutlined, StarOutlined } from "@ant-des
 import CommonInput from "../../component/CommonInput"
 import CommonPassword from "../../component/CommonPassword"
 import CommonButton from "../../component/CommonButton"
+import "../../style/Login.css"
 
 const LoginPage = () => {
   const [form] = Form.useForm()
@@ -62,40 +63,31 @@ const LoginPage = () => {
     try {
       setLoading(true)
 
+      console.log("Form values:", values)
+
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      console.log("Login values:", values)
       message.success("Login successful!")
 
       // Here you would typically handle the login logic
       // navigate to dashboard or handle authentication
     } catch (error) {
+      console.error("Login error:", error)
       message.error("Login failed. Please try again.")
     } finally {
       setLoading(false)
     }
   }
 
-  // Email validation
-  const validateEmail = (_, value) => {
+
+  const valildateEmailLogin = (_, value) => {
     if (!value) {
       return Promise.reject(new Error("Please enter your email!"))
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(value)) {
       return Promise.reject(new Error("Please enter a valid email address!"))
-    }
-    return Promise.resolve()
-  }
-
-  // Password validation
-  const validatePassword = (_, value) => {
-    if (!value) {
-      return Promise.reject(new Error("Please enter your password!"))
-    }
-    if (value.length < 6) {
-      return Promise.reject(new Error("Password must be at least 6 characters!"))
     }
     return Promise.resolve()
   }
@@ -159,19 +151,34 @@ const LoginPage = () => {
 
               {/* Form */}
               <Form form={form} onFinish={handleSubmit} layout="vertical" className="login-form">
-                <Form.Item name="email" rules={[{ validator: validateEmail }]}>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      validator: valildateEmailLogin,
+                    },
+                  ]}
+                >
                   <CommonInput
                     label="Email Address"
                     placeholder="Enter your email"
                     name="email"
-                    type="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     icon={<MailOutlined />}
                   />
                 </Form.Item>
 
-                <Form.Item name="password" rules={[{ validator: validatePassword }]}>
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Password",
+                    },
+                  ]}
+                >
                   <CommonPassword
                     label="Password"
                     placeholder="Enter your password"
