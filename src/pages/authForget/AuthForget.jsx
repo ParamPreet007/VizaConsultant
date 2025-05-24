@@ -1,7 +1,8 @@
 import React from 'react'
 
-export const AuthForget = () => {
+ const AuthForget = () => {
   return (
     <div>AuthForget</div>
   )
 }
+export default AuthForget
